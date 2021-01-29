@@ -15,22 +15,22 @@
  */
 func inorderTraversal(root *TreeNode) []int {
 	result := make([]int, 0)
-	stack := make([]*TreeNode, 0)
 
-	for (len(stack) > 0 || root != nil) {
-		for root != nil {
-			stack = append(stack, root)
-			root = root.Left
-		}
-
-		val := stack[len(stack)-1]
-		result = append(result, val.Val)
-		stack = stack[:len(stack)-1]
-		root = val.Right
-	}
+	result = inorderTraversalInner(root, result)
 
 	return result
-	
+}
+
+func inorderTraversalInner(root *TreeNode, result []int) []int {
+	if root == nil {
+		return result
+	}
+
+	result = inorderTraversalInner(root.Left, result)
+	result = append(result, root.Val)
+	result = inorderTraversalInner(root.Right, result)
+
+	return result
 }
 
 // @lc code=end
